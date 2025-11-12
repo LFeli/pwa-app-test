@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Phone Case - Product Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #222;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .product-detail {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .product-image-large {
+            width: 100%;
+            height: 400px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .product-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: #0066cc;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .rating {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .stars {
+            color: #FFB800;
+            margin-right: 8px;
+        }
+
+        .description {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 32px;
+        }
+
+        .features {
+            margin-bottom: 32px;
+        }
+
+        .features h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        .features ul {
+            list-style-position: inside;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .features li {
+            margin-bottom: 8px;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            padding: 14px 28px;
+            background-color: #0066cc;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .add-to-cart:hover {
+            background-color: #0052a3;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 24px;
+            }
+
+            .product-name {
+                font-size: 24px;
+            }
+
+            .product-image-large {
+                height: 300px;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            h1 {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">← Back to Products</a>
+        <h1>Product Details</h1>
+    </header>
+
+    <div class="container">
+        <div class="product-detail">
+            <div class="detail-grid">
+                <div class="product-image-large">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23FF9800' width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='120' fill='white' text-anchor='middle' dominant-baseline='middle'%3E📱%3C/text%3E%3C/svg%3E" alt="Phone Case">
+                </div>
+                <div class="product-details">
+                    <h2 class="product-name">Premium Phone Case</h2>
+                    <div class="product-price">$24.99</div>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span>(1,248 reviews)</span>
+                    </div>
+                    <p class="description">
+                        Protect your phone with style using our Premium Phone Case. Engineered with military-grade protection and sleek design, this case combines durability with elegance to keep your device safe from drops, scratches, and impacts.
+                    </p>
+                    <div class="features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Military-grade shock absorption</li>
+                            <li>Scratch-resistant exterior</li>
+                            <li>Drop-tested up to 10 feet</li>
+                            <li>Slim and lightweight design</li>
+                            <li>Raised bezels protect screen and camera</li>
+                            <li>Available for multiple phone models</li>
+                            <li>Easy access to all ports and buttons</li>
+                            <li>Premium material construction</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="alert('Added to cart! (Demo)')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Offline Product Store. This app runs completely offline.</p>
+    </footer>
+</body>
+</html>
