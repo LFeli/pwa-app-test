@@ -237,6 +237,10 @@
         </div>
     </div>
 
+    <button id="install-btn" style="display:none; position:fixed; bottom:20px; right:20px; padding:12px 16px;">
+        Install App
+    </button>
+
     <footer>
         <p>&copy; 2025 Offline Product Store. All rights reserved.</p>
     </footer>
@@ -248,20 +252,20 @@
             .catch(err => console.error('❌ Service Worker failed:', err));
         }
 
-	let deferredPrompt;
+        let deferredPrompt;
 
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+        window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
 
-  // Show your install button
-  document.getElementById("install-btn").style.display = "block";
-});
+        // Show your install button
+        document.getElementById("install-btn").style.display = "block";
+        });
 
-document.getElementById("install-btn").addEventListener("click", () => {
-  deferredPrompt.prompt();
-  deferredPrompt = null;
-});
+        document.getElementById("install-btn").addEventListener("click", () => {
+        deferredPrompt.prompt();
+        deferredPrompt = null;
+        });
 
       </script>
 </body>
