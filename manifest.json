@@ -2,7 +2,7 @@
   "name": "InfoHub - Customer Information PWA",
   "short_name": "InfoHub",
   "description": "A Progressive Web App for accessing customer information seamlessly across devices",
-  "start_url": "/",
+  "start_url": "/pwa-app-test",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
