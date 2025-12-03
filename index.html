@@ -58,6 +58,15 @@
                 </div>
             </section>
 
+            <!-- Videos Section -->
+            <section id="videos" class="section">
+                <h2>Videos</h2>
+                <p class="section-description">Tap on a video to watch in fullscreen landscape mode</p>
+                <div id="videos-list" class="videos-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
             <!-- Services Section -->
             <section id="services" class="section">
                 <h2>Services</h2>
@@ -161,6 +170,19 @@
                     <button class="btn btn-primary" onclick="app.installApp()">Install</button>
                     <button class="btn btn-secondary" onclick="app.dismissInstall()">Dismiss</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Fullscreen Video Player Overlay -->
+        <div id="video-player-overlay" class="video-player-overlay hidden">
+            <button class="video-close-btn" onclick="app.closeVideoPlayer()">
+                <span>✕</span>
+            </button>
+            <div class="video-container">
+                <video id="fullscreen-video" playsinline controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
             </div>
         </div>
     </div>

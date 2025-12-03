@@ -3,6 +3,8 @@ const app = {
   deferredPrompt: null,
   installPrompt: null,
   currentSection: "dashboard",
+  videoOverlay: null,
+  videoPlayer: null,
 
   // Initialize App
   init() {
@@ -14,6 +16,9 @@ const app = {
       this.installPrompt = prompt
     }
 
+    this.videoOverlay = document.getElementById("video-player-overlay")
+    this.videoPlayer = document.getElementById("fullscreen-video")
+
     // Register Service Worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
@@ -24,6 +29,7 @@ const app = {
 
     // Load initial data
     this.loadCustomers()
+    this.loadVideos()
     this.updateStats()
     this.populateHours()
 
@@ -37,6 +43,13 @@ const app = {
       this.deferredPrompt = e
       this.showInstallPrompt()
     })
+
+    document.addEventListener("fullscreenchange", () => this.handleFullscreenChange())
+    document.addEventListener("webkitfullscreenchange", () => this.handleFullscreenChange())
+
+    if (this.videoPlayer) {
+      this.videoPlayer.addEventListener("ended", () => this.closeVideoPlayer())
+    }
 
     // Update stats every minute
     setInterval(() => this.updateStats(), 60000)
@@ -102,6 +115,160 @@ const app = {
     }
 
     console.log("[v0] Customers loaded:", customers.length)
+  },
+
+  loadVideos() {
+    console.log("[v0] Loading videos...")
+
+    // Sample video data - using public domain sample videos
+    const videos = [
+      {
+        id: 1,
+        title: "Company Introduction",
+        duration: "2:30",
+        thumbnail: "/placeholder.svg?height=180&width=320",
+        src: "https://www.youtube.com/watch?v=Xd2xr7zIFyk",
+      },
+      {
+        id: 2,
+        title: "Product Demo",
+        duration: "4:15",
+        thumbnail: "/placeholder.svg?height=180&width=320",
+        src: "https://www.youtube.com/watch?v=G1hKzCkywM8",
+      },
+      {
+        id: 3,
+        title: "Customer Success Story",
+        duration: "3:45",
+        thumbnail: "/placeholder.svg?height=180&width=320",
+        src: "https://www.youtube.com/watch?v=a-8XiE7W7u4",
+      },
+      {
+        id: 4,
+        title: "How To Get Started",
+        duration: "5:00",
+        thumbnail: "/placeholder.svg?height=180&width=320",
+        src: "https://www.youtube.com/watch?v=u_5wLvlRhc0",
+      },
+      {
+        id: 5,
+        title: "Feature Highlights",
+        duration: "2:15",
+        thumbnail: "/placeholder.svg?height=180&width=320",
+        src: "./public/example.mov",
+      },
+    ]
+
+    // Save to localStorage
+    localStorage.setItem("videos", JSON.stringify(videos))
+
+    // Render videos with safety check
+    const list = document.getElementById("videos-list")
+    if (list) {
+      list.innerHTML = videos
+        .map(
+          (video) => `
+            <div class="video-card" onclick="app.openVideoPlayer('${video.src}', '${video.title}')">
+              <div class="video-thumbnail">
+                <img src="${video.thumbnail}" alt="${video.title}">
+                <div class="video-play-icon">▶</div>
+              </div>
+              <div class="video-info">
+                <div class="video-title">${video.title}</div>
+                <div class="video-duration">${video.duration}</div>
+              </div>
+            </div>
+          `,
+        )
+        .join("")
+    }
+
+    console.log("[v0] Videos loaded:", videos.length)
+  },
+
+  openVideoPlayer(videoSrc, title) {
+    console.log("[v0] Opening video player:", title)
+
+    if (!this.videoOverlay || !this.videoPlayer) {
+      console.error("[v0] Video player elements not found")
+      return
+    }
+
+    // Set video source
+    this.videoPlayer.src = videoSrc
+
+    // Show overlay
+    this.videoOverlay.classList.remove("hidden")
+
+    // Try to lock screen orientation to landscape
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock("landscape").catch((err) => {
+        console.log("[v0] Could not lock orientation:", err.message)
+      })
+    }
+
+    // Try to enter fullscreen mode
+    const overlay = this.videoOverlay
+    if (overlay.requestFullscreen) {
+      overlay.requestFullscreen().catch((err) => {
+        console.log("[v0] Fullscreen request failed:", err.message)
+      })
+    } else if (overlay.webkitRequestFullscreen) {
+      overlay.webkitRequestFullscreen()
+    } else if (overlay.msRequestFullscreen) {
+      overlay.msRequestFullscreen()
+    }
+
+    // Start playing the video
+    this.videoPlayer.play().catch((err) => {
+      console.log("[v0] Autoplay failed:", err.message)
+    })
+
+    // Hide the navigation bar
+    document.body.style.overflow = "hidden"
+  },
+
+  closeVideoPlayer() {
+    console.log("[v0] Closing video player")
+
+    if (!this.videoOverlay || !this.videoPlayer) {
+      return
+    }
+
+    // Pause and reset video
+    this.videoPlayer.pause()
+    this.videoPlayer.src = ""
+
+    // Hide overlay
+    this.videoOverlay.classList.add("hidden")
+
+    // Exit fullscreen if active
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {})
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
+      }
+    }
+
+    // Unlock screen orientation
+    if (screen.orientation && screen.orientation.unlock) {
+      screen.orientation.unlock()
+    }
+
+    // Restore body scroll
+    document.body.style.overflow = ""
+  },
+
+  handleFullscreenChange() {
+    // If user exits fullscreen while video is playing, close the player
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      if (this.videoOverlay && !this.videoOverlay.classList.contains("hidden")) {
+        // Video overlay is still visible but fullscreen exited
+        // Keep overlay visible but user can close with X button
+        console.log("[v0] Exited fullscreen mode")
+      }
+    }
   },
 
   // Populate Business Hours
@@ -179,6 +346,7 @@ const app = {
     console.log("[v0] Refreshing data...")
 
     this.loadCustomers()
+    this.loadVideos()
     this.updateStats()
     alert("Data refreshed successfully!")
   },
@@ -235,11 +403,13 @@ const app = {
     console.log("[v0] Exporting data...")
 
     const customers = JSON.parse(localStorage.getItem("customers") || "[]")
+    const videos = JSON.parse(localStorage.getItem("videos") || "[]")
     const visits = localStorage.getItem("visits") || "0"
 
     const data = {
       exportDate: new Date().toISOString(),
       customers: customers,
+      videos: videos,
       totalVisits: visits,
     }
 

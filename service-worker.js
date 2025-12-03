@@ -1,5 +1,5 @@
 const CACHE_NAME = "infohub-v1"
-const ASSETS_TO_CACHE = ["/", "/index.html", "/styles.css", "/app.js", "/manifest.json"]
+const ASSETS_TO_CACHE = ["/", "/index.html", "/styles.css", "/app.js", "/manifest.json", "/public/example.mov"]
 
 // Install Event
 self.addEventListener("install", (event) => {
